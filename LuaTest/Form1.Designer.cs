@@ -40,12 +40,14 @@ namespace LuaTest
             this.AutoCmdClockButton = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.LED_1 = new System.Windows.Forms.PictureBox();
+            this.ClearButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.LED_1)).BeginInit();
             this.SuspendLayout();
             // 
             // LuaTextBox
             // 
             this.LuaTextBox.AllowDrop = true;
+            this.LuaTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.LuaTextBox.Location = new System.Drawing.Point(72, 339);
             this.LuaTextBox.Name = "LuaTextBox";
             this.LuaTextBox.Size = new System.Drawing.Size(150, 23);
@@ -55,7 +57,8 @@ namespace LuaTest
             // 
             // LogTextBox
             // 
-            this.LogTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.LogTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.LogTextBox.BackColor = System.Drawing.SystemColors.MenuText;
             this.LogTextBox.ForeColor = System.Drawing.Color.Lime;
@@ -68,6 +71,7 @@ namespace LuaTest
             // 
             // label1
             // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(12, 342);
             this.label1.Name = "label1";
@@ -77,6 +81,7 @@ namespace LuaTest
             // 
             // LuaLeadButtton
             // 
+            this.LuaLeadButtton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.LuaLeadButtton.Location = new System.Drawing.Point(228, 338);
             this.LuaLeadButtton.Name = "LuaLeadButtton";
             this.LuaLeadButtton.Size = new System.Drawing.Size(37, 23);
@@ -87,6 +92,7 @@ namespace LuaTest
             // 
             // ManualClockCheckBox
             // 
+            this.ManualClockCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.ManualClockCheckBox.AutoSize = true;
             this.ManualClockCheckBox.Location = new System.Drawing.Point(12, 368);
             this.ManualClockCheckBox.Name = "ManualClockCheckBox";
@@ -97,6 +103,7 @@ namespace LuaTest
             // 
             // StartLuaButton
             // 
+            this.StartLuaButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.StartLuaButton.Location = new System.Drawing.Point(187, 368);
             this.StartLuaButton.Name = "StartLuaButton";
             this.StartLuaButton.Size = new System.Drawing.Size(78, 22);
@@ -107,6 +114,7 @@ namespace LuaTest
             // 
             // StopLuaButton
             // 
+            this.StopLuaButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.StopLuaButton.Location = new System.Drawing.Point(187, 396);
             this.StopLuaButton.Name = "StopLuaButton";
             this.StopLuaButton.Size = new System.Drawing.Size(78, 22);
@@ -117,6 +125,7 @@ namespace LuaTest
             // 
             // TapCmdClockButton
             // 
+            this.TapCmdClockButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.TapCmdClockButton.Location = new System.Drawing.Point(12, 393);
             this.TapCmdClockButton.Name = "TapCmdClockButton";
             this.TapCmdClockButton.Size = new System.Drawing.Size(141, 45);
@@ -127,6 +136,7 @@ namespace LuaTest
             // 
             // AutoCmdClockButton
             // 
+            this.AutoCmdClockButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.AutoCmdClockButton.Location = new System.Drawing.Point(159, 423);
             this.AutoCmdClockButton.Name = "AutoCmdClockButton";
             this.AutoCmdClockButton.Size = new System.Drawing.Size(106, 22);
@@ -141,6 +151,7 @@ namespace LuaTest
             // 
             // LED_1
             // 
+            this.LED_1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.LED_1.BackColor = System.Drawing.Color.Gray;
             this.LED_1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.LED_1.Location = new System.Drawing.Point(271, 339);
@@ -148,6 +159,17 @@ namespace LuaTest
             this.LED_1.Size = new System.Drawing.Size(25, 25);
             this.LED_1.TabIndex = 5;
             this.LED_1.TabStop = false;
+            // 
+            // ClearButton
+            // 
+            this.ClearButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.ClearButton.Location = new System.Drawing.Point(271, 423);
+            this.ClearButton.Name = "ClearButton";
+            this.ClearButton.Size = new System.Drawing.Size(106, 22);
+            this.ClearButton.TabIndex = 3;
+            this.ClearButton.Text = "ClearText";
+            this.ClearButton.UseVisualStyleBackColor = true;
+            this.ClearButton.Click += new System.EventHandler(this.ClearButton_Click);
             // 
             // Form1
             // 
@@ -157,6 +179,7 @@ namespace LuaTest
             this.Controls.Add(this.LED_1);
             this.Controls.Add(this.ManualClockCheckBox);
             this.Controls.Add(this.TapCmdClockButton);
+            this.Controls.Add(this.ClearButton);
             this.Controls.Add(this.AutoCmdClockButton);
             this.Controls.Add(this.StopLuaButton);
             this.Controls.Add(this.StartLuaButton);
@@ -185,6 +208,7 @@ namespace LuaTest
         private System.Windows.Forms.Button AutoCmdClockButton;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         public System.Windows.Forms.PictureBox LED_1;
+        private System.Windows.Forms.Button ClearButton;
     }
 }
 

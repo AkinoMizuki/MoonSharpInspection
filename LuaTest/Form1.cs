@@ -151,9 +151,11 @@ namespace LuaTest
                 LuaLeadButtton.Enabled = true;
                 LuaTextBox.Enabled = true;
                 ManualClockCheckBox.Enabled = false;
+                ManualClockCheckBox.Checked = false;
                 TapCmdClockButton.Enabled = false;
                 AutoCmdClockButton.Enabled = false;
                 AutoCmdClockFlag = false;
+                ManualClockFlag = false;
                 LogTextBox.AppendText("=== END Lua Cmd ===" + Environment.NewLine);
                 LuaFlag = false;
 
@@ -176,6 +178,11 @@ namespace LuaTest
             AutoCmdClockButton.Enabled = false;
 
         }/*=== END_AutoCmdClock ===*/
+
+        private void ClearButton_Click(object sender, EventArgs e)
+        {/*=== ClearButton ===*/
+            LogTextBox.Clear();
+        }/*=== End_ClearButton ===*/
 
         /************************************************************/
         /*                  Luaスタート                             */
@@ -283,6 +290,8 @@ namespace LuaTest
             }/*=== END_空チェック ===*/
 
         }/*=== END_コンストラクタ ===*/
+
+
 
         /************************************************************/
         /*               　MoonSharp_関数クラス                     */
