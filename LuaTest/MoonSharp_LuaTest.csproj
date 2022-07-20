@@ -20,7 +20,7 @@
 
   <ItemGroup>
     <None Update="main_Lua\types.lua">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 
