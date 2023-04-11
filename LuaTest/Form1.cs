@@ -245,10 +245,12 @@ namespace LuaTest
 
                         };/*=== END_printコマンド ===*/
 
+                        script.Globals["printf"] = (Func<object, string>)Printf;
                         //WinFormクラスをスクリプト内で使えるようにする
                         UserData.RegisterAssembly(typeof(WinForm).Assembly);
                         //WinFormクラスをスクリプト内部で使えるようにする
                         script.Globals["WinForm"] = new WinForm(this);
+
 
                         //Luaスタート
                         DynValue function = script.DoString(lines);
@@ -296,7 +298,36 @@ namespace LuaTest
         /************************************************************/
         /*               　MoonSharp_関数クラス                     */
         /************************************************************/
+        string Printf(object obj)
+        {
 
+            {//スキップ用
+
+                if (ManualClockFlag == true)
+                {//マニュアルクロック用
+
+                    while (ManualClockFlag == true) { }
+
+                    if (AutoCmdClockFlag == true)
+                    {
+                        ManualClockFlag = true;
+                    }
+
+                }//END_マニュアルクロック用
+
+                this.Invoke((Action)(() =>
+                {//別のスレットでUIを制御します
+
+                    LogTextBox.Text = (obj + Environment.NewLine);
+                    LogTextBox.Select(LogTextBox.Text.Length, 0);
+
+                }));//END_別のスレットでUIを制御します
+
+            }//スキップ用
+
+            return (string)obj;
+
+        }
 
     }
 }

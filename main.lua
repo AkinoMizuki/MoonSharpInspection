@@ -1,13 +1,13 @@
---ƒ‚ƒWƒ…[ƒ‹
+--ï¿½ï¿½ï¿½Wï¿½ï¿½ï¿½[ï¿½ï¿½
 local module_1 = require ("module_1")
 local module_2 = require ("module_2")
 
 ---------------------------------------
---		ƒƒCƒ“ŠÖ”
+--		ï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½Öï¿½
 ---------------------------------------
 function main()
 
-	--ŠÈ’P‚ÈŒvZ
+	--ï¿½È’Pï¿½ÈŒvï¿½Z
 	local int = 1
 	int = int + 2
 	print("1+2 Result : " .. int)
@@ -15,7 +15,7 @@ function main()
 	--LED_ON
 	WinForm.LED(true)
 
-	--ŠÖ”ŒÄ‚Ño‚µ
+	--ï¿½Öï¿½ï¿½Ä‚Ñoï¿½ï¿½
 	for count = 1, 10 do
 		print("Count" .. count)
 		WinForm.sleep(60)
@@ -32,9 +32,11 @@ function main()
 end
 
 ---------------------------------------
---		ƒXƒ^[ƒg
+--		ï¿½Xï¿½^ï¿½[ï¿½g
 ---------------------------------------
---ƒXƒ^[ƒg
+--ï¿½Xï¿½^ï¿½[ï¿½g
 main()
---I—¹Šm”F—p
+--ï¿½Iï¿½ï¿½ï¿½mï¿½Fï¿½p
 print("Hello Moon Sharp")
+
+printf("printf ok")

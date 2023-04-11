@@ -1,6 +1,9 @@
 ---------------------------------------
 -- types
 ---------------------------------------
+
+---@field printf fun(ms: string): void
+
 ---API test
 ---@class WinForm
 ---@field sleep fun(ms: nuber): void
