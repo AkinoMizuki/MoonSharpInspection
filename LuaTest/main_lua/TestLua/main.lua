@@ -1,13 +1,18 @@
---���W���[��
+--???W???[??
 local module_1 = require ("module_1")
 local module_2 = require ("module_2")
 
+local Flag = false
+
+print(Flag)
+print(module_1.test4(Flag))
+
 ---------------------------------------
---		���C���֐�
+--		???C?????
 ---------------------------------------
 function main()
 
-	--�ȒP�Ȍv�Z
+	--??P??v?Z
 	local int = 1
 	int = int + 2
 	print("1+2 Result : " .. int)
@@ -15,7 +20,7 @@ function main()
 	--LED_ON
 	WinForm.LED(true)
 
-	--�֐��Ăяo��
+	--?????��o??
 	for count = 1, 10 do
 		print("Count" .. count)
 		WinForm.sleep(60)
@@ -32,11 +37,11 @@ function main()
 end
 
 ---------------------------------------
---		�X�^�[�g
+--		?X?^?[?g
 ---------------------------------------
---�X�^�[�g
+--?X?^?[?g
 main()
---�I���m�F�p
+--?I???m?F?p
 print("Hello Moon Sharp")
 
 printf("printf ok")

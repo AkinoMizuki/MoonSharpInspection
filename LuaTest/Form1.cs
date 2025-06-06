@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MoonSharp.Interpreter;
 using MoonSharp.Interpreter.Loaders;
+using MoonSharp_LuaTest;
 using static MoonSharp_LuaTest.MoonSharpFunction;
 
 namespace LuaTest
@@ -245,12 +246,34 @@ namespace LuaTest
 
                         };/*=== END_printコマンド ===*/
 
+                        UserData.RegisterType<DateTimeObject>(InteropAccessMode.Reflection);
                         script.Globals["printf"] = (Func<object, string>)Printf;
                         //WinFormクラスをスクリプト内で使えるようにする
                         UserData.RegisterAssembly(typeof(WinForm).Assembly);
                         //WinFormクラスをスクリプト内部で使えるようにする
                         script.Globals["WinForm"] = new WinForm(this);
-
+                        // http関連の登録
+                        UserData.RegisterType<HttpRequest>();
+                        UserData.RegisterType<Http>();
+                        script.Globals["http"] = new Http();
+                        // mysql関連の登録
+                        UserData.RegisterType<MySQL>();
+                        script.Globals["mysql"] = new MySQL();
+                        // async_api関連の登録
+                        UserData.RegisterType<AsyncHandle>();
+                        UserData.RegisterType<AsyncAPI>();
+                        // スクリプトごとにAPIをインスタンス化（Scriptを渡す）
+                        script.Globals["async_api"] = new AsyncAPI(script);
+                        // fileとdir関連の登録
+                        UserData.RegisterType<FileAPI>();
+                        UserData.RegisterType<DirAPI>();
+                        script.Globals["file"] = new FileAPI();
+                        script.Globals["dir"] = new DirAPI();
+                        // DateTime関連の登録
+                        UserData.RegisterType<DateTimeObject>();
+                        UserData.RegisterType<TimeSpanObject>();
+                        UserData.RegisterType<DateTimeAPI>();
+                        script.Globals["DateTime"] = typeof(DateTimeAPI);
 
                         //Luaスタート
                         DynValue function = script.DoString(lines);

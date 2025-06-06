@@ -1,4 +1,4 @@
---ƒ‚ƒWƒ…[ƒ‹
+--ï¿½ï¿½ï¿½Wï¿½ï¿½ï¿½[ï¿½ï¿½
 local module_1 = {}
 
 module_1.test = function ()
@@ -15,5 +15,11 @@ module_1.test3 = function ()
 	local text3 = 5
 	return text3
 end
---END_ƒ‚ƒWƒ…[ƒ‹
+
+
+module_1.test4 = function (Flag)
+	return (not Flag)
+end
+
+--END_ï¿½ï¿½ï¿½Wï¿½ï¿½ï¿½[ï¿½ï¿½
 return module_1
