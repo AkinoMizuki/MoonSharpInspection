@@ -2,22 +2,70 @@
 C#(.NET 5)でのMoonSharp(ver2.0.0)の実装メモです。
 
 # 実装API
+# HTTP API
+HTTPリクエストを送信したり、Ping確認ができます。
+
+```lua
+local req = http.SendRequest("https://httpbin.org/get", "GET")
+while not req.IsDone(req) do
+    WinForm.sleep(100)
+end
+if not req.HasError(req) then
+    print(req.GetResponseText(req))
+end
+```
+
+# MySQL API
+MySQLに接続し、SQLの実行やクエリ取得を行えます。
+
+```lua
+local ok, err = mysql.Connect("Server=localhost;User Id=test;Password=test;")
+if ok then
+    mysql.ExecuteNonQuery("CREATE DATABASE test_mysql")
+    mysql.Disconnect()
+end
+```
+
+# DateTime API
+日時取得、加算、差分、比較などが可能です。
+
+```lua
+local now = DateTime.Now()
+print("現在:", now.ToString("%Y/%m/%d %H:%M:%S"))
+print("年:", now.Year)
+print("30秒後:", now.AddSeconds(30):ToString("%Y-%m-%d %H:%M:%S"))
+```
+
+# File / Directory API
+ファイルやフォルダーの作成、削除、読み書きができます。
+
+```lua
+if not dir.Exists("testdir") then
+    dir.Create("testdir")
+end
+
+file.WriteAllText("testdir/test.txt", "内容")
+
+local text = file.ReadAllText("testdir/test.txt")
+print("Read:", text)
+
+-- サイズ取得を追加
+local size = file.GetSize("testdir/test.txt")
+print("GetSize:", size)
+
+file.Delete("testdir/test.txt")
+dir.Delete("testdir")
+```
+
 - print(value)
-- printf(value)
 - WinForm.sleep(msec)
 - WinForm.LED(boolean)
 
 # print(value)
 GUI中央の黒いTextBoxに表示できます
-※日本語対応
+※日本語非対応
 ```lua
   print("文字表示")
-```
-# printf(value)
-GUI中央の黒いTextBoxのprintf内の文字を描画します
-※日本語対応
-```lua
-  printf("文字表示")
 ```
 
 # WinForm.sleep(msec)
@@ -51,12 +99,14 @@ local success = http.Ping("8.8.8.8")
 ### http_request オブジェクト
 リクエストの状態を取得できます。
 ```lua
-if req:IsDone() then
-  if req:HasError() then
-    print("エラー:", req:GetError())
+local req = http.SendRequest("https://example.com", "GET")
+
+if req.IsDone() then
+  if req.HasError() then
+    print("エラー:", req.GetError())
   else
-    print("コード:", req:GetResponseCode())
-    print("本文:", req:GetResponseText())
+    print("コード:", req.GetResponseCode())
+    print("本文:", req.GetResponseText())
   end
 end
 ```
@@ -119,12 +169,12 @@ end
 
 ```lua
 local now = DateTime.Now()
-print("現在:", now:ToString("%Y/%m/%d %H:%M:%S"))
+print("現在:", now.ToString("%Y/%m/%d %H:%M:%S"))
 print("年:", now.Year)
-print("30秒後:", now:AddSeconds(30):ToString())
+print("30秒後:", now.AddSeconds(30):ToString())
 
-local tomorrow = now:AddDays(1)
-local span = tomorrow:Subtract(now)
+local tomorrow = now.AddDays(1)
+local span = tomorrow.Subtract(now)
 print("差:", span.TotalSeconds, "秒")
 ```
 
