@@ -1,8 +1,29 @@
 # MoonSharpInspection
 C#(.NET 5)でのMoonSharp(ver2.0.0)の実装メモです。
 
-# 実装API
-# HTTP API
+## print(value)
+GUI中央の黒いTextBoxに表示できます  
+※日本語非対応
+```lua
+print("文字表示")
+```
+
+## WinForm API
+
+### WinForm.sleep(ms)
+ミリ秒単位で処理を停止します。
+```lua
+WinForm.sleep(100)
+```
+
+### WinForm.LED(on_off)
+フォームのLED表示のON/OFFを切り替えます。
+```lua
+WinForm.LED(true)
+```
+
+## HTTP API
+
 HTTPリクエストを送信したり、Ping確認ができます。
 
 ```lua
@@ -15,7 +36,20 @@ if not req.HasError(req) then
 end
 ```
 
-# MySQL API
+### http
+- `http.SendRequest(url, method[, headers, body])`: HTTPリクエスト送信
+- `http.Ping(ip)`: Ping確認
+
+### http_request
+- `IsDone()`: 完了チェック
+- `HasError()`: エラーチェック
+- `GetError()`: エラー文字列
+- `GetResponseCode()`: ステータスコード
+- `GetResponseText()`: 応答テキスト
+- `GetResponseData()`: 応答データ（文字列またはバイト配列）
+
+## MySQL API
+
 MySQLに接続し、SQLの実行やクエリ取得を行えます。
 
 ```lua
@@ -26,117 +60,46 @@ if ok then
 end
 ```
 
-# DateTime API
+### mysql
+- `Connect(connectionString)`: 接続
+- `Disconnect()`: 切断
+- `IsConnected()`: 接続状態
+- `ExecuteQuery(sql)`: クエリ実行
+- `ExecuteNonQuery(sql)`: 更新SQL
+- `ExecuteScalar(sql)`: 単一値取得
+- `BeginTransaction()` / `Commit()` / `Rollback()`: トランザクション
+
+## DateTime API
+
 日時取得、加算、差分、比較などが可能です。
 
 ```lua
 local now = DateTime.Now()
 print("現在:", now.ToString("%Y/%m/%d %H:%M:%S"))
 print("年:", now.Year)
-print("30秒後:", now.AddSeconds(30):ToString("%Y-%m-%d %H:%M:%S"))
+print("30秒後:", now.AddSeconds(30).ToString())
 ```
 
-# File / Directory API
-ファイルやフォルダーの作成、削除、読み書きができます。
+### DateTime
+- `Now()` / `UtcNow()`: 現在時刻
+- `FromUnixTime(sec)`: UNIX秒から変換
+- `Parse(str)`: 文字列から変換
+- `New(y, m, d[, h, m, s])`: 日時生成
 
-```lua
-if not dir.Exists("testdir") then
-    dir.Create("testdir")
-end
+### DateTimeObject
+- `ToString(format?)`: 書式付き文字列
+- `ToUnixTime()`: UNIX秒へ
+- `AddSeconds(sec)` / `AddDays(days)`
+- `Subtract(other)`: 差分
+- `CompareTo(other)`: 比較
+- `Year`, `Month`, `Day`, `Hour`, `Minute`, `Second`: 各種プロパティ
 
-file.WriteAllText("testdir/test.txt", "内容")
+### TimeSpanObject
+- `TotalSeconds`, `TotalMilliseconds`: 経過時間
 
-local text = file.ReadAllText("testdir/test.txt")
-print("Read:", text)
+## ファイル API（file）
 
--- サイズ取得を追加
-local size = file.GetSize("testdir/test.txt")
-print("GetSize:", size)
-
-file.Delete("testdir/test.txt")
-dir.Delete("testdir")
-```
-
-- print(value)
-- WinForm.sleep(msec)
-- WinForm.LED(boolean)
-
-# print(value)
-GUI中央の黒いTextBoxに表示できます
-※日本語非対応
-```lua
-  print("文字表示")
-```
-
-# WinForm.sleep(msec)
-msecオーダーでウェイトを指定出来ます
-```lua
- --100msウェイト
-　WinForm.sleep(100)
-```
-
-# WinForm.LED(on_off)
-フォームアプリケーションのLEDピクチャをONもしくはOFFできます
-```lua
- --Onします
-　WinForm.LED(true)
-```
-
-# HTTP API
-
-### http.SendRequest(url, method[, headers, body])
-HTTPリクエストを送信します。戻り値は `http_request` オブジェクトです。
-```lua
-local req = http.SendRequest("https://example.com", "GET")
-```
-
-### http.Ping(ip)
-指定IPにPingを送信し、成功すれば `true` を返します。
-```lua
-local success = http.Ping("8.8.8.8")
-```
-
-### http_request オブジェクト
-リクエストの状態を取得できます。
-```lua
-local req = http.SendRequest("https://example.com", "GET")
-
-if req.IsDone() then
-  if req.HasError() then
-    print("エラー:", req.GetError())
-  else
-    print("コード:", req.GetResponseCode())
-    print("本文:", req.GetResponseText())
-  end
-end
-```
-
-# MySQL API
-
-### mysql.Connect(connectionString)
-MySQLに接続します。戻り値は `(true/false, エラーメッセージ)`。
-```lua
-local ok, err = mysql.Connect("Server=localhost;User Id=root;Password=pass;")
-```
-
-### mysql.ExecuteQuery(sql)
-SQLクエリを実行し、行データのテーブルを返します。
-```lua
-local rows, err = mysql.ExecuteQuery("SELECT * FROM mytable")
-for _, row in ipairs(rows) do
-  print(row.id, row.name)
-end
-```
-
-### mysql.ExecuteNonQuery(sql)
-更新系SQLを実行し、影響行数を返します。
-
-### その他
-- `IsConnected()`：接続確認
-- `Disconnect()`：接続終了
-- `BeginTransaction()` / `Commit()` / `Rollback()`：トランザクション制御
-
-# ファイル API（file）
+ファイルの読み書き、削除、コピー、移動、サイズ確認などを行えます。
 
 ```lua
 file.WriteAllText("test.txt", "Hello")
@@ -146,46 +109,31 @@ print("サイズ:", file.GetSize("test.txt"))
 file.Delete("test.txt")
 ```
 
-- `Exists(path)`：存在確認
-- `Copy(src, dest, overwrite?)`：コピー
-- `Move(src, dest)`：移動
+- `WriteAllText(path, text)`
+- `AppendAllText(path, text)`
+- `ReadAllText(path)`
+- `Delete(path)`
+- `Copy(src, dest, overwrite?)`
+- `Move(src, dest)`
+- `GetSize(path)`
+- `Exists(path)`
 
-# ディレクトリ API（dir）
+## ディレクトリ API（dir）
+
+フォルダーの作成、削除、存在確認、ファイル一覧取得などが可能です。
 
 ```lua
 if not dir.Exists("testdir") then
-  dir.Create("testdir")
+    dir.Create("testdir")
 end
 local files = dir.GetFiles(".")
 for _, name in ipairs(files) do
-  print("File:", name)
+    print("File:", name)
 end
 ```
 
-- `Delete(path, recursive?)`：削除（再帰も可）
-- `GetDirectories(path)`：サブディレクトリ取得
-
-# DateTime API
-
-```lua
-local now = DateTime.Now()
-print("現在:", now.ToString("%Y/%m/%d %H:%M:%S"))
-print("年:", now.Year)
-print("30秒後:", now.AddSeconds(30):ToString())
-
-local tomorrow = now.AddDays(1)
-local span = tomorrow.Subtract(now)
-print("差:", span.TotalSeconds, "秒")
-```
-
-### 主な関数とプロパティ
-
-- `DateTime.Now()` / `UtcNow()`：現在日時取得
-- `FromUnixTime(sec)`：UNIX秒から日時変換
-- `Parse(str)`：文字列から日時
-- `New(y, m, d[, h, m, s])`：任意日時生成
-- `ToUnixTime()`：UNIX秒変換
-- `ToString(format?)`：日時文字列
-- `AddSeconds(sec)` / `AddDays(days)`
-- `Subtract(other)`：時間差（TimeSpanObject）
-- `CompareTo(other)`：大小比較
+- `Exists(path)`
+- `Create(path)`
+- `Delete(path, recursive?)`
+- `GetFiles(path)`
+- `GetDirectories(path)`
