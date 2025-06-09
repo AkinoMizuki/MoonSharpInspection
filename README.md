@@ -3,7 +3,7 @@ C#(.NET 5)でのMoonSharp(ver2.0.0)の実装メモです。
 
 ## print(value)
 GUI中央の黒いTextBoxに表示できます  
-※日本語非対応
+※日本語対応
 ```lua
 print("文字表示")
 ```
@@ -137,3 +137,19 @@ end
 - `Delete(path, recursive?)`
 - `GetFiles(path)`
 - `GetDirectories(path)`
+
+## JSON API
+LuaテーブルとJSONの相互変換が可能です。
+```lua
+local tbl = { name = "Lua", version = 5.4 }
+local jsonText = json:encode(tbl)
+print("JSON:", jsonText)
+
+local decoded = json:decode(jsonText)
+print("name:", decoded.name)
+print("version:", decoded.version)
+```
+
+### 主な関数
+- `json:encode(table)`：テーブル → JSON文字列
+- `json:decode(string)`：JSON文字列 → テーブル

@@ -59,7 +59,6 @@ file = {} ---@type file_api
 dir = {} ---@type dir_api
 
 
-
 ---DateTime
 ---@class DateTimeObject
 ---@field ToUnixTime fun(self: DateTimeObject): number
@@ -85,3 +84,9 @@ dir = {} ---@type dir_api
 ---@field Parse fun(dateString: string): DateTimeObject
 ---@field New fun(year: number, month: number, day: number, hour?: number, minute?: number, second?: number): DateTimeObject
 DateTime = {}
+
+
+---@class json_api
+---@field encode fun(self: json_api, value: any): string
+---@field decode fun(self: json_api, json: string): table<any, any>
+json = {} ---@type json_api

@@ -7,16 +7,17 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <OutputPath>D:\03003_purogramu\C#\MoonSharp_LuaTest\Debug\</OutputPath>
+    <OutputPath>..\Debug</OutputPath>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <OutputPath>D:\03003_purogramu\C#\MoonSharp_LuaTest\Release</OutputPath>
+    <OutputPath>..\MoonSharp_LuaTest</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="MoonSharp" Version="2.0.0" />
     <PackageReference Include="MySqlConnector" Version="2.4.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
   <ItemGroup>

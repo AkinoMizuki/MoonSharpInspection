@@ -32,7 +32,7 @@ end
 
 -- HTTP
 ApiTestModel.Test_Http = function()
-    print("=== http_request API 動作確認 ===")
+    print("=== http_request GET API 動作確認 ===")
 
     local url = "https://httpbin.org/get"
     local method = "GET"
@@ -98,6 +98,7 @@ ApiTestModel.Test_Http = function()
         local text = req.GetResponseText(req)
         if text and #text > 0 then
             print("GetResponseText: OK (" .. math.min(#text, 100) .. " chars)")
+            print(text)
         else
             print("GetResponseText: 空文字")
         end
@@ -131,6 +132,81 @@ ApiTestModel.Test_Http = function()
     end)
     if not ok then
         print("Ping: 呼び出しエラー → " .. tostring(err))
+    end
+
+    print("=== http_request Get API 動作確認 終了 ===")
+
+
+
+    print("=== http_request POST API 動作確認（JSON送受信） ===")
+
+    local url = "https://httpbin.org/post"
+    local method = "POST"
+
+    local headers = {
+        ["Content-Type"] = "application/json"
+    }
+
+    local timestamp = DateTime.Now().ToString(DateTime.Now(), "%Y-%m-%d %H:%M:%S")
+    
+    local message = {
+        sender = "LuaScript",
+        message = "Hello from Lua via JSON",
+        timestamp = timestamp
+    }
+
+    for k, v in pairs(message) do
+        print(k, type(v), tostring(v))
+    end
+
+    local body = json.encode(message)
+
+    local req = nil
+    local ok, err = pcall(function()
+        req = http.SendRequest(url, method, headers, body)
+    end)
+
+    if not ok or req == nil then
+        print("SendRequest: エラーでリクエスト開始できません")
+        return
+    else
+        print("SendRequest: OK")
+    end
+
+    local maxWait = 50
+    local i = 0
+    while not req.IsDone(req) and i < maxWait do
+        WinForm.sleep(100)
+        i = i + 1
+    end
+
+    if req.HasError(req) then
+        print("エラー:", req.GetError(req))
+        return
+    else
+        print("HTTP Status:", req.GetResponseCode(req))
+    end
+
+    local text = req.GetResponseText(req)
+    print("受信テキスト:\n" .. text)
+
+    local decoded = nil
+    ok, err = pcall(function()
+        decoded = json.decode(text)
+    end)
+
+    if not ok or not decoded then
+        print("[ERROR] JSONのパースに失敗: " .. tostring(err))
+        return
+    end
+
+    if decoded.json then
+        print("== 受信JSON 内容 ==")
+        for k, v in pairs(decoded.json) do
+            print(k .. ":", v)
+        end
+    else
+        print("[INFO] jsonフィールドが含まれていません")
     end
 
     print("=== http_request API 動作確認 終了 ===")
@@ -229,55 +305,6 @@ function MyLuaDownload(url)
     else
         return req.GetResponseText(req)
     end
-end
-
--- Async
-ApiTestModel.Test_Async = function()
-    print("=== Async HTTP Download 動作確認 ===")
-    local url = "https://httpbin.org/uuid"
-    local completed, result, errorMsg = false, nil, nil
-
-    local handle = async_api.StartAsyncTask("MyLuaDownload:" .. url, function(res, err)
-        completed = true
-        result = res
-        errorMsg = err
-        if err then
-            print("[ERROR] Callback: " .. tostring(err))
-        else
-            print("Callback: 成功 - " .. tostring(res))
-        end
-    end)
-
-    if not handle then
-        print("[ERROR] StartAsyncTask: Error")
-        return
-    else
-        print("StartAsyncTask: OK")
-    end
-
-    local i = 0
-    while not handle.IsDone(handle) and i < 50 do
-        local progress = 0
-        pcall(function()
-            progress = handle.GetProgress(handle)
-        end)
-        print(string.format("Progress: %.1f%%", progress * 100))
-        WinForm.sleep(100)
-        i = i + 1
-    end
-
-    if handle.IsDone(handle) then
-        local err = handle.GetError(handle)
-        if err and err ~= "" then
-            print("[ERROR] GetError: " .. err)
-        else
-            print("GetResult: " .. tostring(handle.GetResult(handle)))
-        end
-    else
-        print("[ERROR] タイムアウト")
-    end
-
-    print("=== Async HTTP Download 動作確認 終了 ===")
 end
 
 

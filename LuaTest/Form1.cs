@@ -274,6 +274,9 @@ namespace LuaTest
                         UserData.RegisterType<TimeSpanObject>();
                         UserData.RegisterType<DateTimeAPI>();
                         script.Globals["DateTime"] = typeof(DateTimeAPI);
+                        //json関連の登録
+                        UserData.RegisterType<JsonApi>();
+                        script.Globals["json"] = new JsonApi();
 
                         //Luaスタート
                         DynValue function = script.DoString(lines);
